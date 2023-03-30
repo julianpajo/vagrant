@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.boot_timeout = 600
 
-  config.vm.provision "shell", preserve_order: true , inline: <<-SHELL
+  config.vm.provision "shell", preserve_order: true , privileged: false, inline: <<-SHELL
 
   # setup keyboard
   setxkbmap it
@@ -52,17 +52,33 @@ Vagrant.configure("2") do |config|
   # Add Google Chrome
   sudo apt-get install -y google-chrome-stable
 
-  # DOCKER
-  config.vm.provision :docker
-  sudo snap install docker
-  sudo chmod 666 /var/run/docker.sock
+  # DOCKER & DOCKER-COMPOSE
+  sudo apt-get update
+  sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg
+
+  sudo mkdir -m 0755 -p /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  sudo curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
   # GIT
   sudo apt-get install -y git
   sudo apt-get install git-flow
 
-  # NVM
+  # NVM, NPM, NODE
   curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+  source $HOME/.nvm/nvm.sh
   nvm install --lts
 
   # JDK
@@ -74,10 +90,14 @@ Vagrant.configure("2") do |config|
   sudo apt-get install intellij-idea-community -y
 
   # VSCODE
-  sudo apt-get install software-properties-common apt-transport-https wget -y
-  wget -O- https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor | sudo tee /usr/share/keyrings/vscode.gpg
-  echo deb [arch=amd64 signed-by=/usr/share/keyrings/vscode.gpg] https://packages.microsoft.com/repos/vscode stable main | sudo tee /etc/apt/sources.list.d/vscode.list
-  sudo apt-get install code
+  sudo apt-get install wget gpg
+  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+  sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+  sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+  rm -f packages.microsoft.gpg
+  sudo apt install apt-transport-https
+  sudo apt update
+  sudo apt install code -y
 
 
   # USE TERMINAL WITHOUT SUDO (LOGIN AS ROOT)

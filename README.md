@@ -1,6 +1,6 @@
 ## Rheticus_GUI Vagrantfile
 
-The Vagrantfile allows you to create a VM Ubuntu 20.04 with some utilities and tools.
+The Vagrantfile allows you to create a VM Ubuntu 20.04.06 LTS with some utilities and tools.
 
 ## INFO ABOUT THE VM
 
@@ -39,5 +39,11 @@ Download in this directory the Vagrantfile and execute the follow command to sta
 $ vagrant up
 ```
 It may take a few minutes to start.
+
+At the first start, it is possible that in the virtualbox screen it is necessary to insert username and password.
+username: vagrant
+password: vagrant
+
+Wait until the provisioning is done, then restart the vm (close the virtualbox screen and redo 'vagrant up').
 
 
