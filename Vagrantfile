@@ -38,10 +38,6 @@ Vagrant.configure("2") do |config|
   sudo apt-get upgrade -y
   sudo apt upgrade -y
 
-  # Add Google Chrome repository
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub|sudo apt-key add -
-  sudo sh -c 'echo \"deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main\" > /etc/apt/sources.list.d/google.list'
-
   # Add desktop environment
   sudo apt-get install -y --no-install-recommends ubuntu-desktop
   sudo apt-get install -y --no-install-recommends virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
@@ -49,8 +45,14 @@ Vagrant.configure("2") do |config|
   # Add `vagrant` to Administrator
   sudo usermod -a -G sudo vagrant
 
+  # Add Google Chrome repository
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub|sudo apt-key add -
+
   # Add Google Chrome
-  sudo apt-get install -y google-chrome-stable
+  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
+  sudo apt-get update 
+  sudo apt-get install google-chrome-stable -y
 
   # DOCKER & DOCKER-COMPOSE
   sudo apt-get update
