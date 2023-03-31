@@ -45,12 +45,9 @@ Vagrant.configure("2") do |config|
   # Add `vagrant` to Administrator
   sudo usermod -a -G sudo vagrant
 
-  # Add Google Chrome repository
+  # GOOGLE CHROME
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub|sudo apt-key add -
-
-  # Add Google Chrome
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-
   sudo apt-get update 
   sudo apt-get install google-chrome-stable -y
 
@@ -100,7 +97,6 @@ Vagrant.configure("2") do |config|
   sudo apt install apt-transport-https
   sudo apt update
   sudo apt install code -y
-
 
   # USE TERMINAL WITHOUT SUDO (LOGIN AS ROOT)
   echo "sudo -i" >> .bashrc
