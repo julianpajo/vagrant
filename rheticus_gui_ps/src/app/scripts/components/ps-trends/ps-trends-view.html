@@ -1,0 +1,107 @@
+<div ng-show="pstrends.show_trends" ng-controller="PsTrendsCtrl as pstrends">
+	<div layout="column" class="psTrends">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<span flex></span>
+				<h2>{{'scattererPanelTrendsTitle' | translate}}</h2>
+				<span flex=""></span>
+				<a class="close" ng-click="pstrends.showPsTrends(false);pstrends.hideMarker()">&times;</a>
+			</div>
+		</md-toolbar>
+
+		<div class="inner" layout-wrap data-intro="Persistent Scatterers Trends" data-position="top">
+				<div id="content" layout="column">
+
+						<div id="top-content" layout-wrap class="psTrendsChart">
+							<nvd3 options="pstrends.options" data="pstrends.data" class="with-3d-shadow with-transitions" api="pstrends.api" config="{deepWatchOptions: true}"></nvd3>
+						</div>
+
+						<div id="option-content" layout-wrap class="psTrendsOptions">
+							<label style="margin-left:15px;margin-bottom:10px;vertical-align: middle;"ng-show="pstrends.checkboxModelView">
+								 {{ 'regressionLinePsTrend' | translate }}
+							</label>
+							<input  type="checkbox" ng-model="pstrends.checkboxModelRegression" ng-change="pstrends.setRegressionView()" ng-show="pstrends.checkboxModelView"></input>
+
+					<label style="margin-left:10px;margin-bottom:10px;vertical-align: middle;" ng-show="pstrends.checkboxModelView">
+						{{ 'noiseFilterPsTrend' | translate }}
+					</label>
+					<input id="errorFilter" type="checkbox" ng-model="pstrends.checkboxModelErrorFilter" ng-change="pstrends.filterErrorView()"
+					 ng-show="pstrends.checkboxModelView"></input>
+
+					<div style="float: right;margin-right:15px;">
+						<label >{{ 'moreInfo' | translate }}</label>
+						<select ng-model="pstrends.comboboxSecondMeasurement"
+						 ng-options="item as item.label | translate for item in pstrends.currentSecondMeasurementItems" ng-change="pstrends.changeSecondMeasurement(pstrends.comboboxSecondMeasurement)">
+						</select>
+					</div>
+					<div ng-show="pstrends.measureFound && pstrends.comboboxSecondMeasurement.value == 'rainfall'" style="float: right;margin-right:15px;">
+
+								<label ng-show="pstrends.viewPrecipitation" id="Precipitations">
+									{{ 'precipitationsPsTrend' | translate }}
+								</label>
+
+								<label ng-show="!pstrends.viewPrecipitation" id="noPrecipitations">
+									{{ 'noPrecipitationsPsTrend' | translate }}
+								</label>
+
+						<select ng-show="pstrends.viewPrecipitation" ng-init="pstrends.comboboxModel = pstrends.rainSelectItems[1]" ng-options="item as item.label | translate for item in pstrends.rainSelectItems"
+						 ng-model="pstrends.comboboxModel" ng-change="pstrends.changeCumulativeView(pstrends.comboboxModel)">
+						</select>
+
+					</div>
+
+				</div>
+					<div id="bottom-content" class="psTrendsTable">
+							<table st-safe-src="pstrends.psDetails" st-table="displayed" class="table table-striped table-condensed">
+								<thead>
+									<tr align="center">
+										<td><b>{{'scattererCode' | translate }}</b></td>
+										<td><b>{{ 'product' | translate }}</b></td>
+										<td><b>{{ 'orbit' | translate }}</b></td>
+										<td><b>{{ 'coherencePsTrend' | translate }}</b></td>
+										<td><b>{{ 'coherenceNormPsTrend' | translate }}</b></td>
+										<td><b>{{ 'quotePsTrend' | translate }}</b></td>
+										<td><b>{{ 'velocityPsTrend' | translate }}</b></td>
+										<td><b>{{ 'accelerationPsTrend' | translate }}</b></td>
+									</tr>
+								</thead>
+								<tbody>
+									<ul lr-infinite-scroll="myEventHandler">
+									<tr align="center" ng-repeat="record in displayed">
+										<td id="featureinfo_{{record.scattererId}}" title="" alt="" style="vertical-align: middle"><span ng-style="{'color':'{{record.color}}'}"> &#x25CF;&nbsp;</span>{{record.scattererCode}}</td>
+										<td style="vertical-align: middle">{{record.scattererType}}</td>
+										<td style="vertical-align: middle">{{record.orbit}}</td>
+										<td style="vertical-align: middle">{{record.coherence}}</td>
+										<td style="vertical-align: middle">{{record.coherence_norm}}</td>
+										<td style="vertical-align: middle">{{record.height}}</td>
+										<td style="vertical-align: middle">{{record.velocity}}</td>
+										<td style="vertical-align: middle">{{record.acceleration}}</td>
+										<td style="vertical-align: middle">
+											<button type="button"
+													title="{{ 'addBookmarkScatterer' | translate}}"
+													ng-style="getAddBookmarkScattererButtonStyle(record)"
+													ng-disabled="bookmarksScattererDict[record.scattererKey]"
+													ng-click="showAddBookmarkScattererDialog($event, record)">
+												<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+											</button>
+										</td>
+									</tr>
+									</ul>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="9" class="text-center">
+											<div st-pagination="" st-items-by-page="5"></div>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+				</div>
+		</div>
+
+		<div style="text-align: right; width: 100%; font-size: x-small;" ng-if="$root.period=='g'">* {{ 'timeFilter' | translate }}: <b>{{'g' | translate}}</b>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div style="text-align: right; width: 100%; font-size: x-small;" ng-if="$root.period=='ly'">* {{ 'timeFilter' | translate }}: <b>{{'ly' | translate}}</b>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div style="text-align: right; width: 100%; font-size: x-small;" ng-if="pstrends.comboboxSecondMeasurement.value === 'rainfall'"><a href="https://darksky.net/poweredby/" target="_blank">Powered by Dark Sky</a></div>
+	</div>
+</div>

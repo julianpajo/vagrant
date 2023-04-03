@@ -1,0 +1,128 @@
+<!--FILTERS SIDENAV-->
+<div ng-controller="ToolbarCtrl" ng-cloak="">
+  <md-toolbar ng-click="openFilterMenu()">
+    <md-item-content layout="row" layout-align="center center" style="margin: 0 auto; width: 130px;">
+      <md-icon md-svg-src="images/icons/filters.svg"></md-icon>
+      <h1 class="md-toolbar-tools noselect" style="cursor:default;color:#ffffff;">{{ 'filtersToolbar' | translate }}</h1>
+    </md-item-content>
+  </md-toolbar>
+  <div data-intro="Area Of Interests" style="margin:10px 20px 20px 20px;" ng-controller="FilterPopoupCtrl as filterPop">
+    <!--
+
+      <h4>{{ 'titleFilters' | translate }}</h4>
+
+      <div ng-show="filterPop.visibleWarning">
+        <h5>{{ 'warningFilters' | translate }}</h5>
+      </div>
+
+    -->
+    <label>{{'timeFilter' | translate}}</label>
+    <br>
+    <div class="btn-group">
+      <button class="periodButton" type="button" ng-class="period == 'g' ? 'btn btn-primary': 'btn'" ng-click="filterPop.selectPeriod('g')">{{'g' | translate}}</button>
+      <button class="periodButton" type="button" ng-class="period == 'ly' ? 'btn btn-primary': 'btn'" ng-click="filterPop.selectPeriod('ly')">{{'ly' | translate}}</button>
+    </div>
+    <br>&nbsp;
+    <br>
+
+    <div ng-hide="filterPop.visibleWarning">
+      <!-- VELOCITY -->
+      <!-- <h5>{{ 'helpFilters' | translate }}</h5>
+        <hr style="margin-top:10px;margin-bottom:5px;"> -->
+      <div>
+        <table width="100%">
+          <tr>
+            <td align="left">
+              <label>{{ 'velocityFilters' | translate }}</label>&nbsp;
+              <label>({{ filterPop.speedOptions.dimension }})</label>
+            </td>
+            <td align="right" ng-hide="!$root.speedSingleShow">
+              <input class="interval-toggle" type="image" ng-click="$root.speedSingleFlag=true" ng-src="{{ 'images/single.png' }}" ng-hide="$root.speedSingleFlag"
+              />
+              <input class="interval-toggle" type="image" ng-click="$root.speedSingleFlag=false" ng-src="{{ 'images/double.png' }}" ng-hide="!$root.speedSingleFlag"
+              />
+            </td>
+          </tr>
+        </table>
+        <div>
+          <div id="speedSlider" ya-no-ui-slider='filterPop.speedOptions' ya-no-ui-slider-events='filterPop.speedEvents' ya-no-ui-slider-slide-debounce='600'></div>
+        </div>
+      </div>
+
+      <!-- ACCELERATION -->
+      <hr style="margin-top:60px;margin-bottom:5px;">
+      <div>
+        <label>{{ 'accelerationFilters' | translate }}</label>&nbsp;
+        <label>({{ filterPop.accelerationOptions.dimension }})</label>
+        <div>
+          <div id="accelerationSlider" slider ya-no-ui-slider='filterPop.accelerationOptions' ya-no-ui-slider-events='filterPop.accelerationEvents'
+               ya-no-ui-slider-slide-debounce='600'></div>
+        </div>
+      </div>
+
+      <!-- COHERENCE MANAGEMENT-->
+      <hr style="margin-top:60px;margin-bottom:5px;">
+      <div>
+        <table width="100%">
+          <tr>
+            <td align="left">
+              <label>{{ 'coherenceFilters' | translate }}</label>&nbsp;
+              <label>({{ $root.normalizeCoherenceFlag ? filterPop.coherenceNormOptions.dimension : filterPop.coherenceOptions.dimension}})</label>
+            </td>
+            <td align="right">
+              <md-switch id="normalizeSwitch" ng-model="$root.normalizeCoherenceFlag">
+                <label class="option-label" style="margin-bottom: 5px;">{{ 'coherenceNormFilters' | translate }}</label>
+              </md-switch>
+            </td>
+          </tr>
+        </table>
+        <!-- COHERENCE ORIGINAL -->
+        <div ng-hide="$root.normalizeCoherenceFlag">
+          <div id="coherenceSlider" slider ya-no-ui-slider='filterPop.coherenceOptions' ya-no-ui-slider-events='filterPop.coherenceEvents'
+               ya-no-ui-slider-slide-debounce='600'></div>
+        </div>
+        <!-- COHERENCE NORMALIZED -->
+        <div ng-hide="!$root.normalizeCoherenceFlag">
+          <div id="coherenceNormSlider" slider ya-no-ui-slider='filterPop.coherenceNormOptions' ya-no-ui-slider-events='filterPop.coherenceNormEvents'
+               ya-no-ui-slider-slide-debounce='600'></div>
+        </div>
+      </div>
+
+      <!-- PROVIDER -->
+      <hr style="margin-top:60px;margin-bottom:5px;">
+      <div>
+        <label>{{ 'dataProvidersFilters' | translate }}</label>
+        <div>
+          <table>
+            <tr ng-repeat="provider in filterPop.dataProviders">
+              <td>
+                <md-switch ng-disabled="provider.disabled" ng-model="provider.checked" ng-change="filterPop.updateSelection($index,filterPop.dataProviders)">
+                  <md-tooltip md-direction="top">{{provider.description}}</md-tooltip>
+                  <label class="option-label">{{provider.description}}</label>
+                </md-switch>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ASCENDING DESCENDING FILTER -->
+      <hr style="margin-top:20px;margin-bottom:5px;">
+      <div>
+        <label>{{ 'orbit' | translate }}</label>
+
+        <div>
+          <md-switch name="Ascendente" ng-model="filterPop.passFilterModelValue.A.checked" ng-disabled="filterPop.passFilterModelValue.A.disabled"
+                     ng-change="filterPop.changePass(filterPop.passFilterModelValue)">
+            <label class="option-label">{{ 'ascending' | translate }}</label>
+          </md-switch>
+          <md-switch name="Discendente" ng-model="filterPop.passFilterModelValue.D.checked" ng-disabled="filterPop.passFilterModelValue.D.disabled"
+                     ng-change="filterPop.changePass(filterPop.passFilterModelValue)">
+            <label class="option-label">{{ 'descending' | translate }}</label>
+          </md-switch>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

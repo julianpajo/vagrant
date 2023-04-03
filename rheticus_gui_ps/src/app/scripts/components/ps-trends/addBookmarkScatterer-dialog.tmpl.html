@@ -1,0 +1,23 @@
+<md-dialog aria-label="addBookmarkScattererDialog" style="width: 25%"  ng-cloak>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h1>{{ 'editPsDsDialog' | translate }}</h1>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-dialog-content" style="padding-bottom: 0; padding-top: 40px">
+            <md-input-container md-no-float class="md-block">
+                <input ng-model="newPsDsName" style="font-size: large" placeholder="{{ 'insertPsDsName' | translate }}" md-auto-focus>
+            </md-input-container>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()">
+                {{ 'cancelButton' | translate }}
+            </md-button>
+            <md-button ng-click="answer(newPsDsName)" style="margin-right:20px;" ng-disabled="!newPsDsName">
+                {{ 'saveButton' | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

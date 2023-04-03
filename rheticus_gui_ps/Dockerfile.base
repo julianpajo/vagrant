@@ -1,0 +1,24 @@
+FROM node:carbon
+ARG repository
+ARG branch
+ARG tag
+ENV env_tag=$tag
+
+RUN apt-get update
+RUN apt-get -y install nginx
+RUN apt-get install -y ruby-compass
+RUN gem install compass
+
+RUN git clone -b $branch $repository /usr/local/rheticus_gui_ps
+
+ONBUILD WORKDIR /usr/local/rheticus_gui_ps
+ONBUILD RUN git pull
+ONBUILD RUN if [ -n "$env_tag" ]; \
+            then \
+                git checkout tags/"$env_tag"; \
+            fi;
+ONBUILD WORKDIR /usr/local/rheticus_gui_ps/src
+ONBUILD RUN npm install -g bower
+ONBUILD RUN npm install -g grunt-cli
+ONBUILD RUN npm install
+ONBUILD RUN bower install --allow-root

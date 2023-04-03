@@ -1,0 +1,35 @@
+  <div  class="timeline" ng-show="timeline.show_timeline===true" style="overflow:auto !important" ng-controller="TimelineCtrl as timeline">
+  	<md-toolbar>
+  		<div class="md-toolbar-tools">
+  			<span flex="30"></span>
+  			<h2>{{ 'titleSentinel' | translate }}</h2>
+  			<span flex=""></span>
+  			<a class="close" ng-click="timeline.showTimeline(false);">&times;</a>
+  		</div>
+  	</md-toolbar>
+
+  	<div data-intro="Sentinel 1 Crops Identifier" data-position="top">
+  		<div data-position="top" style="margin-top:15px!important;" ng-show="timeline.trendCrop===false">
+  			<nvd3
+  				id="bar1"
+  				options="timeline.options"
+  				data="timeline.data"
+  				api="api" >
+  			</nvd3>
+  			<p style="margin-left:35px;">{{ 'result1Sentinel' | translate }} {{timeline.totalCrop}} {{ 'result2Sentinel' | translate }}  {{timeline.totalProduct}} .</p>
+  		</div>
+  		<div ng-show="timeline.trendCrop===true" style="margin:10px!important;">
+  			<button style="margin: 5px;" type="button" class="btn btn-default btn-xs pull-left"  ng-show="timeline.trendCrop===true" ng-click="timeline.trendCrop=false">
+  				<span class="glyphicon glyphicon-chevron-left"></span>
+  			</button>
+  			<label hide-xs style="margin: 5px;">{{timeline.tableData.label}} {{ 'result3Sentinel' | translate }} {{timeline.tableData.features[0].properties.cropId}}</label>
+        <label hide-gt-xs style="margin: 5px;font-size:9px;">{{timeline.tableData.label}} {{ 'result3Sentinel' | translate }} {{timeline.tableData.features[0].properties.cropId}}</label>
+  			<div ng-include src="'scripts/components/timeline/timeline-metadatiTable.html'"></div>
+  			<nvd3 hide-xs
+  				id="bar2"
+  				options="timeline.optionsTrend"
+  				data="timeline.dataTrend"  >
+  			</nvd3>
+  		</div>
+  	</div>
+  </div>

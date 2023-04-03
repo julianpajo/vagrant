@@ -1,0 +1,11 @@
+<!-- Ps Legend -->
+<div ng-show="switchpanel.show_panel_ps" style="background-color: rgba(0, 60, 136, 0);">
+	<div class="switchpanelegend">
+		<img data-ng-src="{{switchpanel.ps_metadata.legend.url.velocity}}">
+		<label ng-if="$root.period!='g'" style="color: #C6C6C6; display: block; font-size: 10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'velocityLegend' | translate }} {{'timeFilter' | translate}}: {{ $root.period | translate }}</label>
+		<label ng-if="$root.period=='g'" style="color: #C6C6C6; display: block; font-size: 10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'velocityLegend' | translate }}</label>
+	</div>
+</div>
+<!--div class="updateDate">
+		<span class="updateDateTime">Last update: 20/05/2016</span>
+</div-->
