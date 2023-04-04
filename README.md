@@ -1,4 +1,4 @@
-## Rheticus_GUI Vagrantfile
+### Rheticus_GUI Vagrantfile
 
 The Vagrantfile allows you to create a VM Ubuntu 20.04.06 LTS with some utilities and tools.
 
