@@ -1,8 +1,8 @@
-### Rheticus_GUI Vagrantfile
+## Rheticus_GUI Vagrantfile
 
 The Vagrantfile allows you to create a VM Ubuntu 20.04.06 LTS with some utilities and tools.
 
-## INFO ABOUT THE VM
+### INFO ABOUT THE VM
 
 Vagrantfile built for lanching gui application of Rheticus
 It provides:
@@ -10,22 +10,21 @@ It provides:
 - google chrome as browser web
 - git and git flow
 - docker and docker compose
-- nvm
-- npm
-- node
+- nvm, npm, node
+- ruby
 - jdk
 - intellij
 - vscode
 
 
-## TIPS FOR THE CONFIG OF THE VM
+### TIPS FOR THE CONFIG OF THE VM
 
 depending on the machine in use, it is recommended to change the values of the memory dedicated to the vm:
 - change the vb.memory attribute to 8048 if your machine has >=16gb of physical RAM,
 - change the VRAM_MB to 256 if your machine has a decent graphic card.
 
 
-## Provisioning
+### Provisioning
 
 In the `Rheticus_GUI` directory open a terminal and execute the follow command:
 
