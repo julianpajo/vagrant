@@ -98,6 +98,15 @@ Vagrant.configure("2") do |config|
   sudo apt update
   sudo apt install code -y
 
+  # RUBY
+  sudo apt-get install ruby-dev -y
+
+  # GRUNT CLI
+  npm install -g grunt-cli
+
+  # BUILD ESSENTIALS
+  sudo apt install build-essential
+
   # USE TERMINAL WITHOUT SUDO (LOGIN AS ROOT)
   echo "sudo -i" >> .bashrc
   
