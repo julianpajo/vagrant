@@ -1,8 +1,8 @@
 #!/bin/bash
 
+cd src/
 npm install phantomjs-prebuilt@2.1.16 --ignore-scripts
 npm install
-cd src/
 bower install
 cd ../
 npm install grunt --save-dev
