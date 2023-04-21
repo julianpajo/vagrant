@@ -2,8 +2,8 @@
 ### Below, the tables and the views in the carme db that are untouched by the script for the migration of the db
 
 ### TABLES:
-aoi  
-bookmark  
+- aoi  
+- bookmark  
 corner_reflector  
 corner_reflector_version  
 crop  
