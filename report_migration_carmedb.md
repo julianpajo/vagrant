@@ -1,6 +1,7 @@
-Below, the tables and the views in the carme db that are untouched by the script for the migration of the db
+# DUMP FOR MIGRATION OF CARME DB
+###Below, the tables and the views in the carme db that are untouched by the script for the migration of the db
 
-TABLES:
+##TABLES:
 aoi
 bookmark
 corner_reflector
@@ -41,7 +42,7 @@ user_role
 user_style
 vwm_ps_regionefvg_
 
-VIEW:
+##VIEW:
 scatterer_view
 
 
