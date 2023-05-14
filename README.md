@@ -15,6 +15,7 @@ It provides:
 - jdk
 - intellij
 - vscode
+- pgadmin4
 
 
 ### TIPS FOR THE CONFIG OF THE VM
@@ -44,5 +45,3 @@ username: vagrant
 password: vagrant
 
 Wait until the provisioning is done, then restart the vm (close the virtualbox screen and redo 'vagrant up').
-
-
